@@ -1,77 +1,103 @@
+   var bg,sleep, brush, gym, eat, bath, move;
+    var astronaut;
+    
+    function preload(){
+      bg= loadImage("iss.png");
+      sleep = loadAnimation("sleep.png");
+      brush = loadAnimation("brush.png");
+      gym = loadAnimation("gym1.png","gym2.png","gym11.png","gym12.png");
+  eat = loadAnimation("eat1.png","eat2.png");
+        bath = loadAnimation("bath1.png","bath2.png");
+     move = loadAnimation("move1.png","move1.png","move.png","move.png");
+    }
+    
+    function setup() {
+      createCanvas(600, 500);
+      
+       astronaut = createSprite(300,230);
+      astronaut.addAnimation("sleeping", sleep);
+      astronaut.scale = 0.1;
+    
+    }
+    
+    function draw() {
+      background(bg);
+      drawSprites();
+    
+      textSize(20);
+     fill("black")
+      text("Click to see daily routine:",20, 35);
+      textSize(15);
+      text("Up Arrow = Brushing",20, 55);
+     text("Down Arrow = Exerscise",20, 70);
+      text("Left Arrow = Eating",20, 85);
+      text("Right Arrow = Bathing",20, 100);
+     text("m key = Moving",20, 115);
+      
+      edges=createEdgeSprites();
+      astronaut.bounceOff(edges);
+      
+      if(keyDown("UP_ARROW")){
+         astronaut.addAnimation("brushing", brush);
+        astronaut.changeAnimation("brushing");
+        astronaut.y = 350;
+        astronaut.velocityX = 0;
+        astronaut.velocityY = 0;
+      }
+      
+      if(keyDown("DOWN_ARROW")){
+        astronaut.addAnimation("gymming", gym);
+          astronaut.changeAnimation("gymming");
+        astronaut.y = 350;
+        astronaut.velocityX = 0;
+        astronaut.velocityY = 0;
+      }
+      
+      if(keyDown("LEFT_ARROW")){
+        astronaut.addAnimation("eating", eat);
+        astronaut.changeAnimation("eating");
+        astronaut.x = 150;
+   astronaut.y = 350;
+        astronaut.velocityX = 0.5;
+        astronaut.velocityY = 0.5;
+      }
+      
+         if(keyDown("RIGHT_ARROW")){
+        astronaut.addAnimation("bathing", bath);
+        astronaut.changeAnimation("bathing");
+        astronaut.x = 300;
+        astronaut.velocityX = 0;
+        astronaut.velocityY = 0;
+      }
+    
+      if(keyDown("ENTER")){
+        astronaut.addAnimation("move",move);
+        astronaut.changeAnimation("move");
+        astronaut.x = 100;
+        astronaut.velocityX = 5;
+        astronaut.velocityY = 09;
+      }
+    
+      
+     
+      
+       
+    }
 
-const Engine = Matter.Engine;
-const World = Matter.World;
-const Bodies = Matter.Bodies;
-const Body = Matter.Body;
-
-let engine;
-let world;
-
-var ground;
-
-var top_wall;
-var ball;
-
-var btn1;
-var btn2;
-
-var constrained;
-function setup() {
-  createCanvas(400,400);
-
-  engine = Engine.create();
-  world = engine.world;
-  
-   var ball_options = {
-    restitution: 0.95,
-  }
-   
-  
-  btn2 = createImg('up.png');
-  btn2.position(20,30);
-  btn2.size(50,50);
-  btn2.mouseClicked(vForce);
-  
-   
-  
-  
-
-  ground =new Ground(200,390,400,20);
 
 
-  ball = Bodies.circle(100,200,20,ball_options);
-  World.add(world,ball);
-  
-  constrained = Matter.Constraint.create({pointA:{x:200,y:20},bodyB:ball,stiffness:0.1,length:100})
-  World.add(world,constrained)
-
-  
-
-  rectMode(CENTER);
-  ellipseMode(RADIUS);
-}
 
 
-function draw() 
-{
-  background(51);
-  Engine.update(engine);
-  
-  stroke(225)
-  line(constrained.pointA.x,constrained.pointA.y,ball.position.x,ball.position.y)
-  
-
-  ellipse(ball.position.x,ball.position.y,20);
-  ground.show();
-  
-  Engine.update(engine);
-}
 
 
-function vForce()
-{
-  Matter.Body.applyForce(ball,{x:0,y:0},{x:0.05,y:-0});
-}
-  
+
+
+
+
+
+
+
+
+
 
 
